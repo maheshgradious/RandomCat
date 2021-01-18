@@ -1,7 +1,7 @@
 import sqlite3
 
 import requests
-from flask import Flask, g
+from flask import Flask, g, render_template
 
 import database
 
@@ -33,14 +33,19 @@ def index_cat():
     cur = get_db().cursor()  # Connect to db
     database.add_cat_to_bd(url_pic, id_pic, cur)  # Add new record to db
     get_db().commit()  # Commit changes
-    return f"<img src='{url_pic}'>"
+    return render_template('index.html', data=url_pic)
 
 
 @app.route('/<cat_id>/')
 def get_cat_by_id(cat_id):
     # TODO return cat picture by id if exists
 
-    return "<img src='https://cdn2.thecatapi.com/logos/thecatapi_256xW.png'>"
+    cur = get_db().cursor()
+    url = database.find_cat_id(cat_id, cur)  # Try to find cat_id in db
+    if url is None:
+        return render_template('error.html')  # If database doesn't have url return 404
+    else:
+        return render_template('index.html', data=url[0])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,25 @@
+html{
+    background: url(back.jpg);
+    background-repeat: repeat;
+    background-size: 250px;
+}
+
+img {
+	display: inline;
+	height: 100%;
+	border: 1px;
+    border-radius: 15px;
+
+}
+
+body {
+    text-align: center;
+
+}
+
+.imgContainer {
+    margin: 0 auto;
+    width: 800px;
+    height: 600px;
+
+}

@@ -146,3 +146,5 @@ cython_debug/
 
 config.ini
 cats.db
+templates/.DS_STORE
+.DS_STORE
