@@ -1,9 +1,13 @@
+import configparser
 import logging
 import sys
 from logging import FileHandler
 
 FORMATTER = logging.Formatter('[%(asctime)s | %(levelname)s]: %(message)s', datefmt='%m.%d.%Y %H:%M:%S')
-LOG_FILE = "db.log"
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+LOG_FILE = config.get('LOG', 'PATH')
 
 
 def get_console_handler():

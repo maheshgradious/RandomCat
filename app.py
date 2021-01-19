@@ -1,10 +1,16 @@
 import sqlite3
 import base64
+import configparser
 
 import requests
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, abort
 
 import database
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+DATABASE_PATH = config.get('DATABASE', 'PATH')
+
 
 app = Flask(__name__)
 
@@ -12,7 +18,7 @@ app = Flask(__name__)
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect('cats.db')
+        db = g._database = sqlite3.connect(DATABASE_PATH)
     return db
 
 
@@ -44,9 +50,14 @@ def get_cat_by_id(cat_id):
     cur = get_db().cursor()
     url = database.find_cat_id(cat_id, cur)  # Try to find cat_id in db
     if url is None:
-        return render_template('error.html')  # If database doesn't have url return 404
+        abort(404)  # If database doesn't have url return 404
     else:
         return render_template('index.html', data=url[0])
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('error.html'), 404
 
 
 if __name__ == '__main__':
