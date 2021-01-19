@@ -1,4 +1,5 @@
 import sqlite3
+import base64
 
 import requests
 from flask import Flask, g, render_template
@@ -26,14 +27,14 @@ def close_connection(exception):
 def index_cat():
     # TODO return cat picture and id
     get_picture = requests.get('https://api.thecatapi.com/v1/images/search')  # Get picture
-
     url_pic = get_picture.json()[0]["url"]  # Get picture url from json
     id_pic = get_picture.json()[0]["id"]  # Get picture id from json
+    base64_pic = base64.b64encode(requests.get(url_pic).content).decode("UTF-8")
 
     cur = get_db().cursor()  # Connect to db
-    database.add_cat_to_bd(url_pic, id_pic, cur)  # Add new record to db
+    database.add_cat_to_bd(base64_pic, id_pic, cur)  # Add new record to db
     get_db().commit()  # Commit changes
-    return render_template('index.html', data=url_pic)
+    return render_template('index.html', data=base64_pic)
 
 
 @app.route('/<cat_id>/')
