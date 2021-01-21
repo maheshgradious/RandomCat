@@ -61,4 +61,5 @@ def not_found_error(error):
 
 
 if __name__ == '__main__':
+    database.create_db()  # Will create database if not exists
     app.run()

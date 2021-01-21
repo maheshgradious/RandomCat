@@ -41,6 +41,3 @@ def create_db():
     db.commit()
     db.close()
 
-
-if __name__ == "__main__":
-    create_db()
