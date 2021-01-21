@@ -6,11 +6,11 @@ Flask web app with random cats.
 
 # Requirements
 
-- Python 3.9.x
+- Python 3.6.x
 
-- flask
+- flask 1.1.2
 
-- requests
+- requests 2.24.0
 
 # How to use
 
@@ -19,13 +19,10 @@ Flask web app with random cats.
 
 2. Install the required libraries.
 
-3. Create DB.
-    > python3 database.py
-
-4. Run app.
+3. Run app.
     >python3 app.py
 
-5. Profit ^.^
+4. Profit ^.^
 
 ##### Web app has two pages
 
